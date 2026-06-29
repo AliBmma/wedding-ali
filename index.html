@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Save the date for Ali and Dania's wedding celebration on August 28, 2026." />
+    <title>Ali & Dania | Wedding Celebration</title>
+    <style>
+      :root {
+        --bg: #f8efe8;
+        --panel: rgba(255, 255, 255, 0.72);
+        --panel-strong: rgba(255, 255, 255, 0.9);
+        --text: #4b2f25;
+        --muted: #7b665b;
+        --accent: #c97b61;
+        --accent-2: #b89c74;
+        --border: rgba(75, 47, 37, 0.14);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(201, 123, 97, 0.18), transparent 26%),
+          radial-gradient(circle at bottom right, rgba(184, 156, 116, 0.16), transparent 24%),
+          var(--bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(75,47,37,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(75,47,37,0.03) 1px, transparent 1px);
+        background-size: 36px 36px;
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent);
+        animation: drift 18s ease-in-out infinite alternate;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: -20%;
+        pointer-events: none;
+        background: radial-gradient(circle at 20% 20%, rgba(201, 123, 97, 0.16), transparent 24%),
+          radial-gradient(circle at 80% 30%, rgba(184, 156, 116, 0.14), transparent 26%),
+          radial-gradient(circle at 50% 80%, rgba(255,255,255,0.3), transparent 28%);
+        filter: blur(10px);
+        animation: pulseGlow 8s ease-in-out infinite alternate;
+      }
+
+      .glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0.38;
+        pointer-events: none;
+        animation: float 10s ease-in-out infinite alternate;
+      }
+
+      .glow.one {
+        width: 280px;
+        height: 280px;
+        background: var(--accent);
+        top: -80px;
+        left: -80px;
+      }
+
+      .glow.two {
+        width: 320px;
+        height: 320px;
+        background: var(--accent-2);
+        right: -120px;
+        bottom: 120px;
+        animation-duration: 12s;
+      }
+
+      .wrap {
+        position: relative;
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 32px 20px 72px;
+        z-index: 1;
+      }
+
+      .hero {
+        position: relative;
+        padding: 52px 0 46px;
+        text-align: center;
+      }
+
+      .hero-visual {
+        margin: 32px auto 0;
+        max-width: 590px;
+        animation: fadeUp 1.25s ease both;
+      }
+
+      .photo-frame {
+        position: relative;
+        padding: 16px;
+        border-radius: 32px;
+        background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
+        border: 1px solid var(--border);
+        box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+        backdrop-filter: blur(18px);
+      }
+
+      .photo-frame::before {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 38px;
+        background: linear-gradient(135deg, rgba(244, 167, 185, 0.2), rgba(142, 197, 255, 0.18));
+        filter: blur(20px);
+        z-index: -1;
+      }
+
+      .photo-frame svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 24px;
+      }
+
+      .photo-frame img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        border-radius: 24px;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 6% 10% auto;
+        height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(244, 167, 185, 0.16), transparent 70%);
+        filter: blur(30px);
+        z-index: -1;
+        animation: pulseGlow 6s ease-in-out infinite alternate;
+      }
+
+      .eyebrow {
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: var(--accent);
+        margin-bottom: 14px;
+        animation: fadeUp 0.8s ease both;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 6vw, 4.7rem);
+        margin: 0;
+        font-weight: 700;
+        line-height: 1.05;
+        color: #fff;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2), #fff4e8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow:
+          1px 1px 0 rgba(75, 47, 37, 0.12),
+          2px 2px 0 rgba(75, 47, 37, 0.1),
+          3px 3px 0 rgba(75, 47, 37, 0.08),
+          4px 4px 0 rgba(75, 47, 37, 0.06);
+        animation: fadeUp 1s ease both, titleGlow 4s ease-in-out infinite alternate;
+      }
+
+      h1 span {
+        color: #fff;
+        display: inline-block;
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, var(--accent), var(--accent-2), #fff4e8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow:
+          1px 1px 0 rgba(75, 47, 37, 0.12),
+          2px 2px 0 rgba(75, 47, 37, 0.1),
+          3px 3px 0 rgba(75, 47, 37, 0.08),
+          4px 4px 0 rgba(75, 47, 37, 0.06);
+      }
+
+      .subtitle {
+        max-width: 650px;
+        margin: 16px auto 0;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--muted);
+        animation: fadeUp 1.1s ease both;
+      }
+
+      .date-card {
+        margin: 34px auto 0;
+        max-width: 520px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 18px 22px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+        animation: fadeUp 1.2s ease both, cardFloat 6s ease-in-out infinite alternate;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .date-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .date-number {
+        width: 72px;
+        height: 72px;
+        border-radius: 20px;
+        display: grid;
+        place-items: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 10px 24px rgba(244, 167, 185, 0.25);
+      }
+
+      .date-details {
+        text-align: left;
+      }
+
+      .date-details p {
+        margin: 2px 0;
+      }
+
+      .date-details .main {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .date-details .sub {
+        color: var(--muted);
+      }
+
+      .button {
+        display: inline-block;
+        margin-top: 24px;
+        padding: 13px 24px;
+        border-radius: 999px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 10px 24px rgba(244, 167, 185, 0.25);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeUp 1.3s ease both, pulse 2.4s ease-in-out infinite;
+      }
+
+      .button::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 16px 32px rgba(244, 167, 185, 0.35);
+      }
+
+      .button:hover::before {
+        transform: translateX(100%);
+      }
+
+      .countdown {
+        margin-top: 12px;
+        padding: 28px 20px;
+        border-radius: 28px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+        animation: fadeUp 1.4s ease both, cardFloat 7s ease-in-out infinite alternate;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .countdown::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+        transform: translateX(-100%);
+        animation: shimmer 3.5s linear infinite;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 0.95rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 22px;
+        font-weight: 700;
+      }
+
+      .clock {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      .unit {
+        padding: 20px 10px;
+        border-radius: 22px;
+        background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.12);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 20px rgba(0, 0, 0, 0.16);
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+      }
+
+      .unit:hover {
+        transform: translateY(-4px) scale(1.02);
+        border-color: rgba(255,255,255,0.25);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 14px 28px rgba(0, 0, 0, 0.22);
+      }
+
+      .unit span {
+        display: block;
+        font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #2f241f;
+        text-shadow: 0 1px 2px rgba(255,255,255,0.35);
+      }
+
+      .unit small {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.72rem;
+      }
+
+      .sparkles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .sparkles span {
+        position: absolute;
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(201, 123, 97, 0.95), rgba(201, 123, 97, 0));
+        opacity: 0.7;
+        animation: sparkleFloat 8s linear infinite;
+        filter: blur(0.3px);
+      }
+
+      .sparkles span:nth-child(2n) {
+        background: radial-gradient(circle, rgba(184, 156, 116, 0.95), rgba(184, 156, 116, 0));
+      }
+
+      .sparkles span:nth-child(3n) {
+        width: 5px;
+        height: 5px;
+        opacity: 0.6;
+      }
+
+      .hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .hearts span {
+        position: absolute;
+        display: block;
+        font-size: 1.15rem;
+        color: rgba(201, 123, 97, 0.75);
+        opacity: 0.7;
+        animation: heartFloat 12s ease-in-out infinite;
+        filter: drop-shadow(0 0 4px rgba(201, 123, 97, 0.25));
+        will-change: transform, opacity;
+      }
+
+      .hearts span:nth-child(2n) {
+        color: rgba(184, 156, 116, 0.75);
+      }
+
+      .hearts span:nth-child(3n) {
+        font-size: 0.95rem;
+        opacity: 0.6;
+      }
+
+      @keyframes float {
+        from {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        to {
+          transform: translate3d(0, 24px, 0) scale(1.06);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes drift {
+        from {
+          transform: translateY(0px) translateX(0px);
+        }
+        to {
+          transform: translateY(-10px) translateX(12px);
+        }
+      }
+
+      @keyframes pulseGlow {
+        from {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+        to {
+          transform: scale(1.04);
+          opacity: 1;
+        }
+      }
+
+      @keyframes titleGlow {
+        from {
+          text-shadow: 0 0 12px rgba(244, 167, 185, 0.16);
+        }
+        to {
+          text-shadow: 0 0 28px rgba(142, 197, 255, 0.24);
+        }
+      }
+
+      @keyframes cardFloat {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-6px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.03);
+        }
+      }
+
+      @keyframes heartFloat {
+        0% {
+          transform: translate(0, 0) rotate(0deg) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        50% {
+          transform: translate(25px, -50vh) rotate(180deg) scale(1.2);
+          opacity: 0.8;
+        }
+        90% {
+          opacity: 0.5;
+        }
+        100% {
+          transform: translate(-15px, -100vh) rotate(360deg) scale(0.8);
+          opacity: 0;
+        }
+      }
+
+      @keyframes sparkleFloat {
+        0% {
+          transform: translateY(100vh) translateX(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        90% {
+          opacity: 0.4;
+        }
+        100% {
+          transform: translateY(-10vh) translateX(20px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .date-card {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .date-details {
+          text-align: center;
+        }
+
+        .details {
+          grid-template-columns: 1fr;
+        }
+
+        .clock {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hearts" aria-hidden="true">
+      <span style="top: 8%; left: 10%; animation-delay: 0s;">❤</span>
+      <span style="top: 22%; left: 86%; animation-delay: 2s;">❤</span>
+      <span style="top: 36%; left: 18%; animation-delay: 4s;">❤</span>
+      <span style="top: 52%; left: 78%; animation-delay: 6s;">❤</span>
+      <span style="top: 68%; left: 12%; animation-delay: 8s;">❤</span>
+      <span style="top: 82%; left: 84%; animation-delay: 5s;">❤</span>
+      <span style="top: 15%; left: 50%; animation-delay: 1s;">❤</span>
+      <span style="top: 45%; left: 35%; animation-delay: 3s;">❤</span>
+      <span style="top: 75%; left: 65%; animation-delay: 7s;">❤</span>
+      <span style="top: 28%; left: 92%; animation-delay: 9s;">❤</span>
+      <span style="top: 60%; left: 25%; animation-delay: 10s;">❤</span>
+      <span style="top: 90%; left: 45%; animation-delay: 11s;">❤</span>
+    </div>
+
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+
+    <div class="wrap">
+      <header class="hero">
+        <p class="eyebrow">Save the Date</p>
+        <h1>Ali <span>&</span> Dania</h1>
+        <p class="subtitle">
+          We are delighted to invite you to celebrate our wedding day with love,
+          laughter, and cherished memories.
+        </p>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="photo-frame">
+            <img
+              src="./photo.jpg"
+              alt="Ali and Dania"
+            />
+          </div>
+        </div>
+
+        <div class="date-card">
+          <div class="date-number">29</div>
+          <div class="date-details">
+            <p class="main">Saturday, August 29, 2026</p>
+            <p class="sub">Ceremony at 6:30 PM</p>
+          </div>
+        </div>
+
+        <a class="button" href="#details" onclick="event.preventDefault(); document.getElementById('details').scrollIntoView({behavior:'smooth', block:'start'});">View Celebration Details</a>
+      </header>
+
+      <section class="countdown" aria-label="Countdown to wedding">
+        <div class="section-title">The countdown has begun</div>
+        <div class="clock">
+          <div class="unit"><span id="days">00</span><small>Days</small></div>
+          <div class="unit"><span id="hours">00</span><small>Hours</small></div>
+          <div class="unit"><span id="minutes">00</span><small>Minutes</small></div>
+          <div class="unit"><span id="seconds">00</span><small>Seconds</small></div>
+        </div>
+      </section>
+
+      <section class="details" id="details">
+        <article class="card">
+          <h2>Wedding Celebration</h2>
+          <p>
+            Join us for a beautiful evening of celebration, heartfelt vows, and joyful moments.
+          </p>
+          <ul>
+            <li>Elegant evening celebration</li>
+            <li>Lovely dinner and dancing</li>
+            <li>Memories to cherish forever</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>Details</h2>
+          <p><strong>Date:</strong> Saturday, August 29, 2026</p>
+          <p><strong>Time:</strong> 6:30 PM</p>
+          <p><strong>Venue:</strong> قاعة الاسطورة للمناسبات / حي الجامعة — <a href="https://maps.app.goo.gl/74YDjmN4zY6SqjiZ9?g_st=awb" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
+          <p><strong>Dress Code:</strong> Formal evening attire</p>
+        </article>
+      </section>
+
+      <section class="closing">
+        <h3>We can’t wait to celebrate this special day with you.</h3>
+        <p>
+          Your presence means the world to us. We look forward to sharing this beautiful
+          beginning with everyone we love.
+        </p>
+      </section>
+    </div>
+
+    <script>
+      const weddingDate = new Date('2026-08-29T18:30:00');
+
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+
+      window.addEventListener('load', () => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        if (window.location.hash) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      });
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = weddingDate - now;
+
+        if (diff <= 0) {
+          document.getElementById('days').textContent = '00';
+          document.getElementById('hours').textContent = '00';
+          document.getElementById('minutes').textContent = '00';
+          document.getElementById('seconds').textContent = '00';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
