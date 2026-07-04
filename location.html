@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venue — Ali &amp; Dania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14100d;
+    --cream: #f6f1ea;
+    --gold: #c9a24b;
+    --gold-soft: #e3c98a;
+    --muted: #8f867b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1.4rem 4rem;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 46rem;
+    text-align: center;
+    position: relative;
+    padding: 3.5rem 2rem 3rem;
+    border: 1px solid rgba(201,162,75,.28);
+  }
+
+  .back {
+    position: absolute;
+    top: 1.4rem;
+    left: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .68rem;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    transition: color .3s ease;
+  }
+
+  .back:hover { color: var(--gold-soft); }
+
+  .monogram {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.4rem;
+    color: var(--gold);
+    margin-bottom: 1.6rem;
+  }
+
+  .eyebrow {
+    font-size: .7rem;
+    letter-spacing: .52em;
+    text-transform: uppercase;
+    text-indent: .52em;
+    color: var(--muted);
+    margin-bottom: 1.4rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    letter-spacing: .05em;
+    line-height: 1.1;
+  }
+
+  .name-ar {
+    font-size: 1.4rem;
+    color: var(--gold-soft);
+    margin-top: .6rem;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    color: var(--gold);
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    width: 64px;
+    height: 1px;
+    background: linear-gradient(to var(--dir, right), transparent, var(--gold));
+  }
+  .divider::after { --dir: left; }
+
+  .divider .diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1.6rem;
+    margin: 0 auto 2.4rem;
+    max-width: 36rem;
+  }
+
+  .detail .label {
+    font-size: .62rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    text-indent: .4em;
+    color: var(--muted);
+    margin-bottom: .55rem;
+  }
+
+  .detail .value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--cream);
+  }
+
+  .map-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgba(201,162,75,.35);
+    margin-bottom: 2.2rem;
+    filter: grayscale(.2) sepia(.12);
+  }
+
+  .map-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .95rem 2.6rem;
+    border: 1px solid var(--gold);
+    color: var(--gold-soft);
+    text-decoration: none;
+    font-size: .72rem;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    text-indent: .32em;
+    transition: background .4s ease, color .4s ease;
+  }
+
+  .map-btn svg { flex-shrink: 0; }
+
+  .map-btn:hover {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .note {
+    margin-top: 1.8rem;
+    font-size: .82rem;
+    font-weight: 300;
+    letter-spacing: .12em;
+    line-height: 1.9;
+    color: rgba(246,241,234,.65);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 1s ease forwards;
+  }
+  .reveal:nth-child(2) { animation-delay: .15s; }
+  .reveal:nth-child(3) { animation-delay: .3s; }
+  .reveal:nth-child(4) { animation-delay: .45s; }
+  .reveal:nth-child(5) { animation-delay: .6s; }
+  .reveal:nth-child(6) { animation-delay: .75s; }
+  .reveal:nth-child(7) { animation-delay: .9s; }
+  .reveal:nth-child(8) { animation-delay: 1.05s; }
+  .reveal:nth-child(9) { animation-delay: 1.2s; }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <a class="back" href="index.html">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M15 6l-6 6 6 6"/>
+    </svg>
+    Invitation
+  </a>
+
+  <p class="monogram reveal">A &amp; D</p>
+  <p class="eyebrow reveal">Venue &amp; Location</p>
+
+  <h1 class="reveal">Al-Ostoura Hall 2</h1>
+  <p class="name-ar reveal">قاعة الاسطورة ٢</p>
+
+  <div class="divider reveal"><span class="diamond"></span></div>
+
+  <div class="details reveal">
+    <div class="detail">
+      <p class="label">Date</p>
+      <p class="value">Saturday, August 29, 2026</p>
+    </div>
+    <div class="detail">
+      <p class="label">City</p>
+      <p class="value">Baghdad, Iraq</p>
+    </div>
+  </div>
+
+  <div class="map-frame reveal">
+    <iframe
+      src="https://www.google.com/maps?q=Al-Ostoura%20Hall%202%20%D9%82%D8%A7%D8%B9%D8%A9%20%D8%A7%D9%84%D8%A7%D8%B3%D8%B7%D9%88%D8%B1%D8%A9%20%D9%A2%20Baghdad&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Map of Al-Ostoura Hall 2, Baghdad">
+    </iframe>
+  </div>
+
+  <a class="map-btn reveal" href="https://maps.app.goo.gl/74YDjmN4zY6SqjiZ9?g_st=awb" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"/>
+      <circle cx="12" cy="10" r="2.6"/>
+    </svg>
+    Open in Google Maps
+  </a>
+
+  <p class="note reveal">We can't wait to celebrate with you.</p>
+</main>
+
+</body>
+</html>
