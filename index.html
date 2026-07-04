@@ -257,6 +257,37 @@
     color: var(--ink);
   }
 
+  .women-note {
+    margin-top: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .7rem;
+  }
+
+  .women-note .note-en {
+    display: inline-flex;
+    align-items: center;
+    gap: .9rem;
+    font-size: .72rem;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    text-indent: .42em;
+    color: var(--gold-soft);
+  }
+
+  .women-note .note-ar {
+    font-size: .95rem;
+    color: var(--gold-soft);
+  }
+
+  .women-note .dot {
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
   /* ---------- entrance animation ---------- */
   .reveal {
     opacity: 0;
@@ -269,6 +300,7 @@
   .reveal:nth-child(5) { animation-delay: .85s; }
   .reveal:nth-child(6) { animation-delay: 1.05s; }
   .reveal:nth-child(7) { animation-delay: 1.25s; }
+  .reveal:nth-child(8) { animation-delay: 1.45s; }
 
   @keyframes rise {
     to { opacity: 1; transform: translateY(0); }
@@ -345,6 +377,11 @@
       </svg>
       Venue &amp; Location
     </a>
+
+    <div class="women-note reveal">
+      <p class="note-en"><span class="dot"></span> For Women Only <span class="dot"></span></p>
+      <p class="note-ar" lang="ar">للنساء فقط</p>
+    </div>
   </section>
 
 </main>
