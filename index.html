@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ali &amp; Dania — Wedding Invitation</title>
+<title>علي و دانيا — دعوة زفاف</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Almarai:wght@300;400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #14100d;
-    --cream: #f6f1ea;
-    --gold: #c9a24b;
-    --gold-soft: #e3c98a;
-    --muted: #8f867b;
+    /* palette drawn from the photo: ivory tulle, champagne light, amber-gold ring */
+    --ink: #f3e7d3;
+    --cream: #4a331e;
+    --gold: #b9854a;
+    --gold-soft: #96662e;
+    --muted: #a58a68;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,7 +22,7 @@
   body {
     background: var(--ink);
     color: var(--cream);
-    font-family: 'Jost', sans-serif;
+    font-family: 'Almarai', sans-serif;
     min-height: 100vh;
   }
 
@@ -31,7 +32,7 @@
     min-height: 100vh;
   }
 
-  /* ---------- Photo side ---------- */
+  /* ---------- Photo side (appears on the right in RTL) ---------- */
   .photo-side {
     position: relative;
     overflow: hidden;
@@ -57,20 +58,23 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, transparent 55%, var(--ink) 100%),
-                linear-gradient(to top, rgba(20,16,13,.55), transparent 40%);
+    background: linear-gradient(to left, transparent 55%, var(--ink) 100%),
+                linear-gradient(to top, rgba(74,51,30,.4), transparent 40%);
     pointer-events: none;
   }
 
   .photo-caption {
     position: absolute;
     bottom: 2.2rem;
-    left: 2.2rem;
+    right: 2.2rem;
     z-index: 2;
+    direction: ltr;
+    font-family: 'Jost', sans-serif;
     font-size: .68rem;
     letter-spacing: .45em;
     text-transform: uppercase;
-    color: rgba(246,241,234,.85);
+    color: rgba(246,241,234,.95);
+    text-shadow: 0 1px 10px rgba(74,51,30,.75);
   }
 
   /* ---------- Text side ---------- */
@@ -80,7 +84,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 5rem 3rem;
+    padding: 4.5rem 3rem;
     position: relative;
   }
 
@@ -88,39 +92,46 @@
     content: '';
     position: absolute;
     inset: 1.4rem;
-    border: 1px solid rgba(201,162,75,.28);
+    border: 1px solid rgba(185,133,74,.4);
     pointer-events: none;
   }
 
-  .eyebrow {
-    font-size: .72rem;
-    letter-spacing: .52em;
-    text-transform: uppercase;
+  .quran {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.25rem, 2.6vw, 1.7rem);
     color: var(--gold-soft);
-    margin-bottom: 2.4rem;
+    margin-bottom: 1.8rem;
+    line-height: 1.9;
+  }
+
+  .eyebrow {
+    font-size: .85rem;
+    font-weight: 300;
+    color: var(--gold-soft);
+    margin-bottom: 2rem;
   }
 
   .names {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(3.2rem, 6.5vw, 5.6rem);
-    line-height: 1.05;
-    letter-spacing: .04em;
+    font-family: 'Amiri', serif;
+    font-weight: 400;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.15;
   }
 
   .amp {
-    font-family: 'Great Vibes', cursive;
-    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-family: 'Amiri', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
     color: var(--gold);
     display: block;
-    margin: .6rem 0;
+    margin: .3rem 0;
   }
 
   .divider {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin: 2.6rem 0;
+    margin: 2.2rem 0;
     color: var(--gold);
   }
 
@@ -144,19 +155,18 @@
     display: flex;
     align-items: center;
     gap: 1.8rem;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Amiri', serif;
   }
 
   .date-block .day,
   .date-block .year {
-    font-size: .78rem;
-    font-family: 'Jost', sans-serif;
-    letter-spacing: .4em;
-    text-transform: uppercase;
+    font-size: .95rem;
+    font-family: 'Almarai', sans-serif;
+    font-weight: 300;
     color: var(--muted);
     padding: .55rem 0;
-    border-top: 1px solid rgba(201,162,75,.4);
-    border-bottom: 1px solid rgba(201,162,75,.4);
+    border-top: 1px solid rgba(185,133,74,.5);
+    border-bottom: 1px solid rgba(185,133,74,.5);
   }
 
   .date-block .center {
@@ -166,33 +176,28 @@
   }
 
   .date-block .month {
-    font-size: 1.05rem;
-    letter-spacing: .5em;
-    text-transform: uppercase;
+    font-size: 1.3rem;
     margin-bottom: .5rem;
-    text-indent: .5em;
   }
 
   .date-block .num {
-    font-size: 4.6rem;
-    font-weight: 300;
+    font-size: 4.2rem;
     color: var(--gold-soft);
   }
 
   .invite-line {
     max-width: 30rem;
-    margin-top: 2.6rem;
+    margin-top: 2.4rem;
     font-weight: 300;
-    font-size: .95rem;
-    letter-spacing: .12em;
-    line-height: 2;
-    color: rgba(246,241,234,.82);
+    font-size: 1rem;
+    line-height: 2.1;
+    color: rgba(74,51,30,.85);
   }
 
   .countdown {
     display: flex;
     gap: clamp(1.2rem, 3vw, 2.6rem);
-    margin-top: 2.8rem;
+    margin-top: 2.6rem;
   }
 
   .countdown .unit {
@@ -203,20 +208,16 @@
   }
 
   .countdown .value {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(2rem, 4vw, 2.9rem);
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
     line-height: 1;
     color: var(--gold-soft);
-    font-variant-numeric: tabular-nums;
   }
 
   .countdown .label {
     margin-top: .6rem;
-    font-size: .62rem;
-    letter-spacing: .38em;
-    text-transform: uppercase;
-    text-indent: .38em;
+    font-size: .78rem;
+    font-weight: 300;
     color: var(--muted);
   }
 
@@ -227,26 +228,24 @@
   .countdown .unit + .unit::before {
     content: '';
     position: absolute;
-    left: calc(-.5 * clamp(1.2rem, 3vw, 2.6rem));
+    right: calc(-.5 * clamp(1.2rem, 3vw, 2.6rem));
     top: .35rem;
     bottom: 1.2rem;
     width: 1px;
-    background: rgba(201,162,75,.3);
+    background: rgba(185,133,74,.35);
   }
 
   .map-btn {
-    margin-top: 3rem;
+    margin-top: 2.8rem;
     display: inline-flex;
     align-items: center;
     gap: .7rem;
-    padding: .95rem 2.6rem;
+    padding: .95rem 2.8rem;
     border: 1px solid var(--gold);
     color: var(--gold-soft);
     text-decoration: none;
-    font-size: .72rem;
-    letter-spacing: .32em;
-    text-transform: uppercase;
-    text-indent: .32em;
+    font-size: .95rem;
+    font-weight: 300;
     transition: background .4s ease, color .4s ease;
   }
 
@@ -259,25 +258,10 @@
 
   .women-note {
     margin-top: 2.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .7rem;
-  }
-
-  .women-note .note-en {
     display: inline-flex;
     align-items: center;
     gap: .9rem;
-    font-size: .72rem;
-    letter-spacing: .42em;
-    text-transform: uppercase;
-    text-indent: .42em;
-    color: var(--gold-soft);
-  }
-
-  .women-note .note-ar {
-    font-size: .95rem;
+    font-size: 1rem;
     color: var(--gold-soft);
   }
 
@@ -301,6 +285,7 @@
   .reveal:nth-child(6) { animation-delay: 1.05s; }
   .reveal:nth-child(7) { animation-delay: 1.25s; }
   .reveal:nth-child(8) { animation-delay: 1.45s; }
+  .reveal:nth-child(9) { animation-delay: 1.65s; }
 
   @keyframes rise {
     to { opacity: 1; transform: translateY(0); }
@@ -319,13 +304,13 @@
     }
 
     .text-side {
-      padding: 3.5rem 1.6rem 4.5rem;
+      padding: 3rem 1.6rem 4rem;
     }
 
     .text-side::before { inset: .9rem; }
 
     .date-block { gap: 1.1rem; }
-    .date-block .num { font-size: 3.4rem; }
+    .date-block .num { font-size: 3.2rem; }
   }
 </style>
 </head>
@@ -334,61 +319,60 @@
 <main class="invitation">
 
   <section class="photo-side">
-    <img src="ring.jpg" alt="A woman's hand wearing a diamond engagement ring, gently held">
+    <img src="ring3.jpg" alt="العريس يضع خاتم الزفاف في يد العروس">
     <span class="photo-caption">She said yes</span>
   </section>
 
   <section class="text-side">
-    <p class="eyebrow reveal">Together with their families</p>
+    <p class="quran reveal">﴿ وَجَعَلْنَا بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ﴾</p>
+
+    <p class="eyebrow reveal">بدعوةٍ من عائلتيهما، يتشرفان بحضوركم حفل زفافهما</p>
 
     <h1 class="names reveal">
-      Ali
-      <span class="amp">&amp;</span>
-      Dania
+      علي
+      <span class="amp">و</span>
+      دانيا
     </h1>
 
     <div class="divider reveal"><span class="diamond"></span></div>
 
     <div class="date-block reveal">
-      <span class="day">Saturday</span>
+      <span class="day">السبت</span>
       <span class="center">
-        <span class="month">August</span>
-        <span class="num">29</span>
+        <span class="month">آب</span>
+        <span class="num">٢٩</span>
       </span>
-      <span class="year">2026</span>
+      <span class="year">٢٠٢٦</span>
     </div>
 
     <p class="invite-line reveal">
-      joyfully invite you to celebrate their wedding —
-      an evening of love, laughter, and happily ever after.
+      ندعوكم لمشاركتنا فرحتنا في أمسيةٍ يملؤها الحب والفرح،
+      لنبدأ معاً حكاية العمر
     </p>
 
-    <div class="countdown reveal" aria-label="Countdown to the wedding">
-      <span class="unit"><span class="value" id="cd-days">—</span><span class="label">Days</span></span>
-      <span class="unit"><span class="value" id="cd-hours">—</span><span class="label">Hours</span></span>
-      <span class="unit"><span class="value" id="cd-mins">—</span><span class="label">Minutes</span></span>
-      <span class="unit"><span class="value" id="cd-secs">—</span><span class="label">Seconds</span></span>
+    <div class="countdown reveal" aria-label="العد التنازلي ليوم الزفاف">
+      <span class="unit"><span class="value" id="cd-days">—</span><span class="label">يوم</span></span>
+      <span class="unit"><span class="value" id="cd-hours">—</span><span class="label">ساعة</span></span>
+      <span class="unit"><span class="value" id="cd-mins">—</span><span class="label">دقيقة</span></span>
+      <span class="unit"><span class="value" id="cd-secs">—</span><span class="label">ثانية</span></span>
     </div>
 
     <a class="map-btn reveal" href="location.html">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
         <path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"/>
         <circle cx="12" cy="10" r="2.6"/>
       </svg>
-      Venue &amp; Location
+      القاعة والموقع
     </a>
 
-    <div class="women-note reveal">
-      <p class="note-en"><span class="dot"></span> For Women Only <span class="dot"></span></p>
-      <p class="note-ar" lang="ar">للنساء فقط</p>
-    </div>
+    <p class="women-note reveal"><span class="dot"></span> للنساء فقط <span class="dot"></span></p>
   </section>
 
 </main>
 
 <script>
   (function () {
-    var target = new Date(2026, 7, 29, 0, 0, 0); // August 29, 2026, local time
+    var target = new Date(2026, 7, 29, 0, 0, 0); // 29 آب 2026، بالتوقيت المحلي
     var els = {
       days:  document.getElementById('cd-days'),
       hours: document.getElementById('cd-hours'),
@@ -396,23 +380,27 @@
       secs:  document.getElementById('cd-secs')
     };
 
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    var AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
+    function ar(n) {
+      var s = (n < 10 ? '0' + n : '' + n);
+      return s.replace(/\d/g, function (d) { return AR_DIGITS[+d]; });
+    }
 
     function tick() {
       var diff = target - new Date();
       if (diff <= 0) {
-        els.days.textContent = '00';
-        els.hours.textContent = '00';
-        els.mins.textContent = '00';
-        els.secs.textContent = '00';
+        els.days.textContent = ar(0);
+        els.hours.textContent = ar(0);
+        els.mins.textContent = ar(0);
+        els.secs.textContent = ar(0);
         clearInterval(timer);
         return;
       }
       var s = Math.floor(diff / 1000);
-      els.days.textContent  = pad(Math.floor(s / 86400));
-      els.hours.textContent = pad(Math.floor(s / 3600) % 24);
-      els.mins.textContent  = pad(Math.floor(s / 60) % 60);
-      els.secs.textContent  = pad(s % 60);
+      els.days.textContent  = ar(Math.floor(s / 86400));
+      els.hours.textContent = ar(Math.floor(s / 3600) % 24);
+      els.mins.textContent  = ar(Math.floor(s / 60) % 60);
+      els.secs.textContent  = ar(s % 60);
     }
 
     var timer = setInterval(tick, 1000);
