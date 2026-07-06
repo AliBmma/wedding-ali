@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موقع حفل الرجال — علي و دانية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* palette drawn from the photo: ivory tulle, champagne light, amber-gold ring */
+    --ink: #f3e7d3;
+    --cream: #4a331e;
+    --gold: #b9854a;
+    --gold-soft: #96662e;
+    --muted: #a58a68;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Almarai', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1.4rem 4rem;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 46rem;
+    text-align: center;
+    position: relative;
+    padding: 3.5rem 2rem 3rem;
+    border: 1px solid rgba(185,133,74,.4);
+  }
+
+  .back {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 300;
+    transition: color .3s ease;
+  }
+
+  .back:hover { color: var(--gold-soft); }
+
+  .back svg { transform: scaleX(-1); }
+
+  .monogram {
+    font-family: 'Amiri', serif;
+    font-size: 2.3rem;
+    color: var(--gold);
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+  }
+
+  .rings {
+    display: inline-block;
+    line-height: 0;
+  }
+
+  .rings svg {
+    overflow: visible;
+    width: 78px;
+    height: auto;
+  }
+
+  .rings .gem {
+    animation: gemTwinkle 3s ease-in-out infinite;
+  }
+
+  .rings .sparkle {
+    animation: gemTwinkle 3s ease-in-out 1.5s infinite;
+  }
+
+  .rings .sparkle2 {
+    animation: gemTwinkle 3s ease-in-out .8s infinite;
+  }
+
+  @keyframes gemTwinkle {
+    0%, 100% { opacity: .45; }
+    50%      { opacity: 1; }
+  }
+
+  .eyebrow {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 1.4rem;
+  }
+
+  h1 {
+    font-family: 'Amiri', serif;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 7.5vw, 4.1rem);
+    line-height: 1.25;
+  }
+
+  .name-en {
+    font-size: 1.45rem;
+    direction: ltr;
+    color: var(--gold-soft);
+    margin-top: .6rem;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    color: var(--gold);
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    width: 64px;
+    height: 1px;
+    background: linear-gradient(to var(--dir, right), transparent, var(--gold));
+  }
+  .divider::after { --dir: left; }
+
+  .divider .diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1.6rem;
+    margin: 0 auto 2.4rem;
+    max-width: 36rem;
+  }
+
+  .detail .label {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: .55rem;
+  }
+
+  .detail .value {
+    font-family: 'Amiri', serif;
+    font-size: 1.9rem;
+    color: var(--cream);
+  }
+
+  .map-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgba(185,133,74,.45);
+    margin-bottom: 2.2rem;
+    filter: grayscale(.2) sepia(.12);
+  }
+
+  .map-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .95rem 2.8rem;
+    border: 1px solid var(--gold);
+    color: var(--gold-soft);
+    text-decoration: none;
+    font-size: 1.35rem;
+    font-weight: 300;
+    transition: background .4s ease, color .4s ease;
+  }
+
+  .map-btn svg { flex-shrink: 0; }
+
+  .map-btn:hover {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .note {
+    margin-top: 1.8rem;
+    font-size: 1.35rem;
+    font-weight: 300;
+    line-height: 2;
+    color: rgba(74,51,30,.75);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 1s ease forwards;
+  }
+  .reveal:nth-child(2) { animation-delay: .15s; }
+  .reveal:nth-child(3) { animation-delay: .3s; }
+  .reveal:nth-child(4) { animation-delay: .45s; }
+  .reveal:nth-child(5) { animation-delay: .6s; }
+  .reveal:nth-child(6) { animation-delay: .75s; }
+  .reveal:nth-child(7) { animation-delay: .9s; }
+  .reveal:nth-child(8) { animation-delay: 1.05s; }
+  .reveal:nth-child(9) { animation-delay: 1.2s; }
+  .reveal:nth-child(10) { animation-delay: 1.35s; }
+  .reveal:nth-child(11) { animation-delay: 1.5s; }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <a class="back" href="men.html">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M15 6l-6 6 6 6"/>
+    </svg>
+    العودة إلى الدعوة
+  </a>
+
+  <p class="monogram reveal">علي
+  <span class="rings" aria-hidden="true">
+    <svg viewBox="0 0 120 82" width="96" height="66" fill="none">
+      <defs>
+        <linearGradient id="goldBandA" x1="20" y1="20" x2="70" y2="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#f9e9c0"/>
+          <stop offset=".35" stop-color="#e0b26a"/>
+          <stop offset=".65" stop-color="#b9854a"/>
+          <stop offset="1" stop-color="#8a5f26"/>
+        </linearGradient>
+        <linearGradient id="goldBandB" x1="100" y1="18" x2="52" y2="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#f6e3b2"/>
+          <stop offset=".4" stop-color="#d9a75e"/>
+          <stop offset=".7" stop-color="#a97a3c"/>
+          <stop offset="1" stop-color="#7c5420"/>
+        </linearGradient>
+        <linearGradient id="gemIce" x1="45" y1="8" x2="45" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#ffffff"/>
+          <stop offset=".5" stop-color="#e8f3fa"/>
+          <stop offset="1" stop-color="#b9d6e8"/>
+        </linearGradient>
+      </defs>
+
+      <!-- right band (behind) -->
+      <circle cx="74" cy="48" r="24" stroke="url(#goldBandB)" stroke-width="7"/>
+      <circle cx="74" cy="48" r="20.8" stroke="#6e4a1c" stroke-width=".9" opacity=".5"/>
+      <path d="M 88 30 A 24 24 0 0 1 97 42" stroke="#fff6dd" stroke-width="2.4" stroke-linecap="round" opacity=".85"/>
+
+      <!-- left band -->
+      <circle cx="46" cy="48" r="24" stroke="url(#goldBandA)" stroke-width="7"/>
+      <circle cx="46" cy="48" r="20.8" stroke="#6e4a1c" stroke-width=".9" opacity=".5"/>
+      <path d="M 30 34 A 24 24 0 0 1 40 26" stroke="#fff6dd" stroke-width="2.4" stroke-linecap="round" opacity=".85"/>
+
+      <!-- weave: right band passes over the left at the lower crossing -->
+      <path d="M 57 68 A 24 24 0 0 1 51 57" stroke="url(#goldBandB)" stroke-width="7" stroke-linecap="butt"/>
+
+      <!-- prongs -->
+      <path d="M40 25 L40 20 M52 25 L52 20" stroke="#c99a55" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- diamond -->
+      <g class="gem">
+        <polygon points="39,13 53,13 57,19 35,19" fill="url(#gemIce)" stroke="#9fc2d8" stroke-width=".8"/>
+        <polygon points="35,19 57,19 46,32" fill="url(#gemIce)" stroke="#9fc2d8" stroke-width=".8"/>
+        <path d="M39 13 L41 19 M53 13 L51 19 M46 13 L46 19 M41 19 L46 32 M51 19 L46 32" stroke="#ffffff" stroke-width=".7" opacity=".9"/>
+      </g>
+
+      <!-- sparkles -->
+      <g class="sparkle" stroke="#f4dfae" stroke-width="1.5" stroke-linecap="round">
+        <path d="M104 12 v8 M100 16 h8"/>
+        <path d="M17 16 v5 M14.5 18.5 h5"/>
+      </g>
+      <g class="sparkle2" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round">
+        <path d="M60 6 v5 M57.5 8.5 h5"/>
+      </g>
+    </svg>
+  </span>
+  دانية</p>
+  <p class="eyebrow reveal">القاعة والموقع</p>
+
+  <h1 class="reveal">موقع حفل الرجال</h1>
+  <p class="name-en reveal" style="direction:rtl">حي الجامعة — قرب جامع نجمة، بغداد</p>
+
+  <div class="divider reveal"><span class="diamond"></span></div>
+
+  <div class="details reveal">
+    <div class="detail">
+      <p class="label">التاريخ</p>
+      <p class="value">الجمعة ٢٨ آب ٢٠٢٦</p>
+    </div>
+    <div class="detail">
+      <p class="label">تنويه</p>
+      <p class="value">للرجال فقط</p>
+    </div>
+  </div>
+
+  <div class="map-frame reveal">
+    <iframe
+      src="https://www.google.com/maps?q=33.325752,44.317393&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="خريطة موقع حفل الرجال، بغداد">
+    </iframe>
+  </div>
+
+  <a class="map-btn reveal" href="https://maps.app.goo.gl/gAsRRGatB9fatTbF9" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"/>
+      <circle cx="12" cy="10" r="2.6"/>
+    </svg>
+    افتح الموقع في خرائط كوكل
+  </a>
+
+  <p class="note reveal">بانتظار مشاركتكم فرحتنا</p>
+</main>
+
+</body>
+</html>
