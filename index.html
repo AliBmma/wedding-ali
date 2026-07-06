@@ -389,6 +389,195 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ---------- envelope intro ---------- */
+  body:not(.env-open) .reveal,
+  body:not(.env-open) .photo-caption i {
+    animation-play-state: paused;
+  }
+
+  body.env-intro {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* the real page rises through the envelope mouth like a sheet of paper:
+     it sits above the back wall (z94) but behind the front pocket (z100),
+     so its lower part is genuinely hidden inside the envelope. */
+  body.env-intro .invitation {
+    --envw: min(420px, 82vw, 88vh);                  /* envelope width */
+    --ph: min(calc(var(--envw) * .78), 38vh);        /* paper height */
+    --sx: calc(50vw - var(--envw) * .36);            /* paper side insets */
+    --mouth: 50vh;                                   /* envelope mouth line */
+    --envb: calc(50vh + var(--envw) / 3);            /* envelope bottom edge */
+    --ty0: calc(var(--ph) + 1vh);                    /* start: tucked inside */
+    position: relative;
+    z-index: 95;
+    will-change: clip-path, transform;
+    animation: envPageOut 2.1s linear 1.55s both;
+  }
+
+  /* mobile Safari: dynamic viewport units keep the mouth line aligned with
+     the envelope when the browser chrome collapses */
+  @supports (height: 1dvh) {
+    body.env-intro .invitation {
+      --ph: min(calc(var(--envw) * .78), 38dvh);
+      --mouth: 50dvh;
+      --envb: calc(50dvh + var(--envw) / 3);
+    }
+  }
+
+  /* phase 1: the sheet slides up out of the mouth (clip window fixed in
+     element space, element translating, so content moves with the paper;
+     the bottom edge stays parked behind the pocket). phase 2: it extends. */
+  @keyframes envPageOut {
+    0% {
+      clip-path: inset(calc(var(--mouth) - var(--ph)) var(--sx) calc(100% - var(--envb) + var(--ty0)) var(--sx) round 10px);
+      transform: translateY(var(--ty0));
+      filter: drop-shadow(0 10px 22px rgba(74, 51, 30, .35));
+      animation-timing-function: cubic-bezier(.33, .55, .2, 1);
+    }
+    50% {
+      clip-path: inset(calc(var(--mouth) - var(--ph)) var(--sx) calc(100% - var(--envb)) var(--sx) round 10px);
+      transform: translateY(0);
+      filter: drop-shadow(0 10px 22px rgba(74, 51, 30, .35));
+      animation-timing-function: cubic-bezier(.6, 0, .12, 1);
+    }
+    100% {
+      clip-path: inset(0px 0px 0px 0px round 0px);
+      transform: translateY(0);
+      filter: drop-shadow(0 0 0 rgba(74, 51, 30, 0));
+    }
+  }
+
+  .env-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: var(--ink);
+    pointer-events: none;
+    animation: envBackdropOut .8s ease 2.9s forwards;
+  }
+
+  @keyframes envBackdropOut {
+    to { opacity: 0; }
+  }
+
+  /* two synced overlays sandwich the page: back wall + flap behind it,
+     front pocket + wax seal in front of it */
+  .envelope-behind,
+  .envelope-scene {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .envelope-behind { z-index: 94; }
+  .envelope-scene  { z-index: 100; }
+
+  .envelope {
+    position: relative;
+    width: min(420px, 82vw, 88vh);
+    aspect-ratio: 3 / 2;
+    animation: envIn .8s cubic-bezier(.25, 1, .4, 1) both;
+  }
+
+  .envelope-behind .envelope {
+    filter: drop-shadow(0 18px 36px rgba(74, 51, 30, .35));
+  }
+
+  @keyframes envIn {
+    from { opacity: 0; transform: translateY(44px) scale(.92); }
+  }
+
+  /* the empty envelope sinks away once the page has left it */
+  .env-shell {
+    position: absolute;
+    inset: 0;
+    perspective: 1000px;
+    animation: envShellOut .9s cubic-bezier(.5, 0, .8, .6) 2.65s both;
+  }
+
+  @keyframes envShellOut {
+    to { transform: translateY(70px) scale(.94); opacity: 0; }
+  }
+
+  .env-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    background: #d9c19c;
+  }
+
+  .env-pocket {
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #ecd9b7, #dcc298);
+    clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+    box-shadow: inset 0 -1px 0 rgba(122, 84, 38, .3);
+  }
+
+  .env-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 54%;
+    transform-origin: top center;
+    animation: envFlapOpen .9s cubic-bezier(.4, 0, .2, 1) .9s both;
+  }
+
+  .env-flap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    background: linear-gradient(180deg, #e6d1ab, #d2b78a);
+  }
+
+  @keyframes envFlapOpen {
+    to { transform: rotateX(180deg); }
+  }
+
+  /* the wax seal sits on the front and breaks as the flap opens */
+  .env-seal {
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    transform: translate(-50%, -50%);
+    width: clamp(42px, 15vw, 56px);
+    height: clamp(42px, 15vw, 56px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: clamp(.9rem, 3.2vw, 1.15rem);
+    color: #fbf3e2;
+    background: radial-gradient(circle at 35% 30%, #d9a75e, #b9854a 55%, #8a5f26);
+    box-shadow: 0 2px 8px rgba(74, 51, 30, .4),
+                inset 0 0 0 2px rgba(251, 243, 226, .35);
+    animation: envSealPop .35s ease .85s forwards;
+  }
+
+  @keyframes envSealPop {
+    to { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .env-backdrop,
+    .envelope-behind,
+    .envelope-scene { display: none; }
+    body.env-intro { height: auto; overflow: auto; }
+    body.env-intro .invitation { animation: none; }
+    body:not(.env-open) .reveal,
+    body:not(.env-open) .photo-caption i { animation-play-state: running; }
+  }
+
   /* ---------- responsive ---------- */
   @media (max-width: 880px) {
     .invitation { grid-template-columns: 1fr; }
@@ -412,7 +601,27 @@
   }
 </style>
 </head>
-<body>
+<body class="env-intro">
+
+<div class="env-backdrop" aria-hidden="true"></div>
+
+<div class="envelope-behind" aria-hidden="true">
+  <div class="envelope">
+    <div class="env-shell">
+      <div class="env-back"></div>
+      <div class="env-flap"></div>
+    </div>
+  </div>
+</div>
+
+<div class="envelope-scene" aria-hidden="true">
+  <div class="envelope">
+    <div class="env-shell">
+      <div class="env-pocket"></div>
+      <span class="env-seal">ع&nbsp;و&nbsp;د</span>
+    </div>
+  </div>
+</div>
 
 <nav class="switch" aria-label="اختيار الدعوة">
   <span class="current">دعوة النساء</span>
@@ -542,6 +751,26 @@
 </main>
 
 <script>
+  /* envelope intro: release the page reveals once the envelope has opened */
+  (function () {
+    function finish() {
+      document.body.classList.add('env-open');
+      document.body.classList.remove('env-intro');
+      var els = document.querySelectorAll('.env-backdrop, .envelope-behind, .envelope-scene');
+      for (var i = 0; i < els.length; i++) {
+        if (els[i].parentNode) els[i].parentNode.removeChild(els[i]);
+      }
+    }
+    /* play the envelope only once per visit - not again when switching
+       between the two invitations */
+    var seen = false;
+    try { seen = sessionStorage.getItem('envSeen') === '1'; } catch (e) {}
+    if (seen || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) { finish(); return; }
+    try { sessionStorage.setItem('envSeen', '1'); } catch (e) {}
+    setTimeout(function () { document.body.classList.add('env-open'); }, 2100);
+    setTimeout(finish, 3800);
+  })();
+
   (function () {
     var target = new Date(2026, 7, 29, 0, 0, 0); // 29 آب 2026، بالتوقيت المحلي
     var els = {
