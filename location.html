@@ -26,7 +26,7 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    padding: 3rem 1.4rem 4rem;
+    padding: 5.2rem 1.4rem 4rem;
   }
 
   .page {
@@ -36,6 +36,52 @@
     position: relative;
     padding: 3.5rem 2rem 3rem;
     border: 1px solid rgba(185,133,74,.4);
+  }
+
+  /* ---------- invitation switch (shows which one you're viewing) ---------- */
+  .switch {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    padding: .3rem;
+    gap: .3rem;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    background: rgba(243,231,211,.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 18px rgba(150,102,46,.18);
+  }
+
+  .switch .current,
+  .switch a {
+    display: inline-block;
+    padding: .45rem 1.4rem;
+    border-radius: 999px;
+    font-size: .95rem;
+    font-weight: 300;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .switch .current {
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .switch a {
+    color: var(--gold-soft);
+    transition: background .3s ease, color .3s ease;
+  }
+
+  .switch a:hover {
+    background: rgba(185,133,74,.22);
+    color: var(--cream);
   }
 
   .back {
@@ -229,6 +275,11 @@
 </style>
 </head>
 <body>
+
+<nav class="switch" aria-label="اختيار الدعوة">
+  <span class="current">دعوة النساء</span>
+  <a href="location-men.html">الدعوة العامة</a>
+</nav>
 
 <main class="page">
   <a class="back" href="index.html">
