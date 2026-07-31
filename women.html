@@ -480,6 +480,36 @@
     color: var(--ink);
   }
 
+  /* ---------- background music ---------- */
+  .music-toggle {
+    position: fixed;
+    bottom: 1.2rem;
+    left: 1.2rem;
+    z-index: 30;                 /* under the envelope overlay, so it appears with the page */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    background: rgba(243, 231, 211, .85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--gold-soft);
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(150, 102, 46, .18);
+    transition: background .3s ease, color .3s ease;
+  }
+
+  .music-toggle.ready { display: inline-flex; }
+  .music-toggle:hover { background: var(--gold); color: var(--ink); }
+  .music-toggle svg { width: 20px; height: 20px; }
+  .music-toggle .icon-off { display: none; }
+  .music-toggle.muted .icon-on { display: none; }
+  .music-toggle.muted .icon-off { display: block; }
+
   /* ---------- wishes wall ---------- */
   .wishes-list {
     width: min(34rem, 100%);
@@ -1336,6 +1366,23 @@
   <span class="env-petal" style="--x:92%;--s:18px;--t:18s;--d:-13s"></span>
 </div>
 
+<audio id="bg-music" src="background.mp3" loop preload="auto"></audio>
+
+<button class="music-toggle" id="music-toggle" type="button"
+        aria-label="تشغيل أو إيقاف الموسيقى" aria-pressed="true">
+  <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M11 5 L6 9 H3 v6 h3 l5 4 z"/>
+    <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+    <path d="M18.5 5.5a9 9 0 0 1 0 13"/>
+  </svg>
+  <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M11 5 L6 9 H3 v6 h3 l5 4 z"/>
+    <path d="M16 9.5 L21 14.5 M21 9.5 L16 14.5"/>
+  </svg>
+</button>
+
 <nav class="switch" aria-label="اختيار الدعوة">
   <a href="index.html">الدعوة العامة</a>
   <span class="current">دعوة النساء</span>
@@ -1834,6 +1881,64 @@
         section.hidden = false;
       })
       .catch(function () { /* leave the section hidden rather than show an error */ });
+  })();
+  /* ---------- background music ----------
+     every browser blocks audio until the visitor interacts, so we try once on
+     load and otherwise wait for the first gesture - which on this page is the
+     tap that opens the envelope. */
+  (function () {
+    var audio = document.getElementById('bg-music');
+    var btn = document.getElementById('music-toggle');
+    if (!audio || !btn) return;
+
+    var LEVEL = .35;                       // gentle under an invitation
+    var muted = false;
+    try { muted = sessionStorage.getItem('musicOff') === '1'; } catch (e) {}
+
+    audio.volume = 0;
+
+    function fadeIn() {
+      var step = LEVEL / 25;
+      var timer = setInterval(function () {
+        audio.volume = Math.min(LEVEL, audio.volume + step);
+        if (audio.volume >= LEVEL) clearInterval(timer);
+      }, 60);
+    }
+
+    function play() {
+      if (muted) return;
+      var p = audio.play();
+      if (p && p.then) p.then(fadeIn).catch(function () { /* needs a gesture first */ });
+      else fadeIn();
+    }
+
+    /* only offer the control once the file is actually usable. preload can
+       finish before this script runs, so check the state as well as the event. */
+    function ready() {
+      btn.classList.add('ready');
+      if (muted) btn.classList.add('muted');
+    }
+    if (audio.readyState >= 2) ready();
+    audio.addEventListener('canplay', ready);
+    audio.addEventListener('error', function () {
+      console.warn('[music] background.mp3 could not be loaded');
+    });
+
+    btn.addEventListener('click', function () {
+      muted = !muted;
+      btn.classList.toggle('muted', muted);
+      btn.setAttribute('aria-pressed', String(!muted));
+      try { sessionStorage.setItem('musicOff', muted ? '1' : '0'); } catch (e) {}
+      if (muted) { audio.pause(); } else { audio.volume = 0; play(); }
+    });
+
+    /* first gesture anywhere - the envelope tap included - unblocks playback */
+    function onGesture() { play(); }
+    ['pointerdown', 'keydown', 'touchstart'].forEach(function (evt) {
+      document.addEventListener(evt, onGesture, { once: true, passive: true });
+    });
+
+    play();                                 // in case this browser allows it outright
   })();
 </script>
 
