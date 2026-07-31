@@ -480,6 +480,152 @@
     color: var(--ink);
   }
 
+  /* ---------- RSVP ---------- */
+  .rsvp-panel { padding-bottom: 5rem; }
+
+  .rsvp-form {
+    width: min(30rem, 100%);
+    margin: 2.4rem auto 0;
+    text-align: right;
+  }
+
+  .rsvp-field { margin-bottom: 1.6rem; }
+
+  .rsvp-label {
+    display: block;
+    margin-bottom: .65rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--gold-soft);
+  }
+
+  .rsvp-input,
+  .rsvp-select,
+  .rsvp-textarea {
+    display: block;
+    width: 100%;
+    padding: .85rem 1rem;
+    border: 1px solid rgba(185, 133, 74, .45);
+    border-radius: 3px;
+    background: rgba(255, 252, 245, .6);
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--cream);
+    transition: border-color .3s ease, box-shadow .3s ease;
+  }
+
+  .rsvp-textarea { resize: vertical; min-height: 6.5rem; line-height: 1.9; }
+
+  .rsvp-input:focus,
+  .rsvp-select:focus,
+  .rsvp-textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(185, 133, 74, .16);
+  }
+
+  .rsvp-input::placeholder,
+  .rsvp-textarea::placeholder { color: rgba(165, 138, 104, .8); }
+
+  /* yes / no pills */
+  .rsvp-choice { display: flex; gap: .8rem; }
+
+  .rsvp-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .rsvp-pill {
+    flex: 1;
+    padding: .85rem 1rem;
+    border: 1px solid rgba(185, 133, 74, .45);
+    border-radius: 3px;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: background .3s ease, color .3s ease, border-color .3s ease;
+  }
+
+  .rsvp-pill:hover { border-color: var(--gold); }
+
+  .rsvp-radio:checked + .rsvp-pill {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+
+  .rsvp-radio:focus-visible + .rsvp-pill {
+    box-shadow: 0 0 0 3px rgba(185, 133, 74, .3);
+  }
+
+  /* the guest count only matters if they are coming */
+  .rsvp-guests[hidden] { display: none; }
+
+  .rsvp-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .7rem;
+    width: 100%;
+    margin-top: .4rem;
+    padding: .95rem 2.8rem;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold-soft);
+    font-family: inherit;
+    font-size: 1.3rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background .4s ease, color .4s ease, opacity .3s ease;
+  }
+
+  .rsvp-submit:hover:not(:disabled) { background: var(--gold); color: var(--ink); }
+  .rsvp-submit:disabled { opacity: .55; cursor: default; }
+
+  .rsvp-status {
+    margin-top: 1rem;
+    min-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: 300;
+    text-align: center;
+    color: var(--muted);
+  }
+
+  .rsvp-status.err { color: #9c4a3c; }
+
+  /* replaces the form once a reply is in */
+  .rsvp-done {
+    width: min(30rem, 100%);
+    margin: 2.4rem auto 0;
+    padding: 2.2rem 1.6rem;
+    border: 1px solid rgba(185, 133, 74, .4);
+    text-align: center;
+  }
+
+  .rsvp-done p {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--gold-soft);
+  }
+
+  .rsvp-again {
+    margin-top: 1.2rem;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: .95rem;
+    font-weight: 300;
+    color: var(--muted);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
   /* closing panel */
   .closing-panel { padding-bottom: 6.5rem; }
 
@@ -1293,6 +1439,62 @@
   </a>
 </section>
 
+<section class="panel rsvp-panel" id="rsvp" hidden>
+  <p class="panel-eyebrow inview">تأكيد الحضور</p>
+  <p class="panel-heading inview">شرفونا بتأكيد حضوركم</p>
+  <p class="panel-text inview">يسعدنا أن نعرف إن كنتم ستشاركوننا فرحتنا، حتى نحجز لكم مكانكم</p>
+
+  <form class="rsvp-form inview" id="rsvp-form" data-invitation="الدعوة العامة" novalidate>
+    <div class="rsvp-field">
+      <label class="rsvp-label" for="rsvp-name">الاسم الكامل</label>
+      <input class="rsvp-input" id="rsvp-name" name="name" type="text"
+             autocomplete="name" maxlength="120" placeholder="اسمكم الكريم" required>
+    </div>
+
+    <div class="rsvp-field">
+      <span class="rsvp-label" id="rsvp-attending-label">هل ستشرفونا بالحضور؟</span>
+      <div class="rsvp-choice" role="radiogroup" aria-labelledby="rsvp-attending-label">
+        <input class="rsvp-radio" type="radio" name="attending" id="rsvp-yes" value="yes" checked>
+        <label class="rsvp-pill" for="rsvp-yes">نعم، سأحضر</label>
+        <input class="rsvp-radio" type="radio" name="attending" id="rsvp-no" value="no">
+        <label class="rsvp-pill" for="rsvp-no">للأسف، لا أستطيع</label>
+      </div>
+    </div>
+
+    <div class="rsvp-field rsvp-guests" id="rsvp-guests">
+      <label class="rsvp-label" for="rsvp-count">عدد الأشخاص (بما فيهم أنتم)</label>
+      <select class="rsvp-select" id="rsvp-count" name="guests">
+        <option value="1">١</option>
+        <option value="2">٢</option>
+        <option value="3">٣</option>
+        <option value="4">٤</option>
+        <option value="5">٥</option>
+        <option value="6">٦</option>
+        <option value="7">٧</option>
+        <option value="8">٨</option>
+        <option value="9">٩</option>
+        <option value="10">١٠</option>
+        <option value="12">١٢</option>
+        <option value="15">١٥</option>
+      </select>
+    </div>
+
+    <div class="rsvp-field">
+      <label class="rsvp-label" for="rsvp-message">كلمة للعروسين (اختياري)</label>
+      <textarea class="rsvp-textarea" id="rsvp-message" name="message"
+                maxlength="500" placeholder="دعواتكم وكلماتكم تسعدنا"></textarea>
+    </div>
+
+    <button class="rsvp-submit" type="submit" id="rsvp-submit">إرسال الرد</button>
+    <p class="rsvp-status" id="rsvp-status" role="status" aria-live="polite"></p>
+  </form>
+
+  <div class="rsvp-done inview" id="rsvp-done" hidden>
+    <p id="rsvp-done-text">شكراً لكم، تم تسجيل ردكم بنجاح</p>
+    <button class="rsvp-again" type="button" id="rsvp-again">تعديل الرد</button>
+  </div>
+</section>
+
 <section class="panel closing-panel" id="closing">
   <div class="flourish inview">
     <svg viewBox="0 0 60 24" width="60" height="24" fill="none" stroke="currentColor" stroke-width="1.2">
@@ -1395,6 +1597,135 @@
       });
     }, { threshold: .2, rootMargin: '0px 0px -40px 0px' });
     items.forEach(function (el) { io.observe(el); });
+  })();
+  /* ---------- RSVP ----------
+     GitHub Pages only serves static files, so replies are posted to a Google
+     Apps Script web app that appends them to a Google Sheet. Paste the /exec
+     URL below - see RSVP-SETUP.md. While it is empty the section stays hidden,
+     so guests never meet a form that cannot submit. */
+  var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbysEicpRcAjtw7Mq6B-RrjJ_5rGPpWEsJzVUHEtvtDIs9Gi7Ra4wm8Vego_mxT4y1lm/exec';
+
+  (function () {
+    var section = document.getElementById('rsvp');
+    if (!section) return;
+    section.hidden = false;
+
+    /* with no endpoint yet the form still shows, but it must never pretend a
+       reply was saved - on a local preview it says so plainly, anywhere else it
+       reports a normal send failure. */
+    var LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+                || location.protocol === 'file:';
+    if (!RSVP_ENDPOINT) {
+      console.warn('[RSVP] no endpoint set - paste your Apps Script /exec URL into ' +
+                   'RSVP_ENDPOINT before publishing (see RSVP-SETUP.md)');
+    }
+
+    var form    = document.getElementById('rsvp-form');
+    var guests  = document.getElementById('rsvp-guests');
+    var status  = document.getElementById('rsvp-status');
+    var submit  = document.getElementById('rsvp-submit');
+    var done    = document.getElementById('rsvp-done');
+    var doneTxt = document.getElementById('rsvp-done-text');
+    var again   = document.getElementById('rsvp-again');
+    var KEY     = 'rsvpSent';
+
+    function attending() {
+      var el = form.querySelector('input[name="attending"]:checked');
+      return el ? el.value : 'yes';
+    }
+
+    /* the guest count is meaningless for a "no" */
+    function syncGuests() { guests.hidden = attending() !== 'yes'; }
+    form.addEventListener('change', function (e) {
+      if (e.target.name === 'attending') syncGuests();
+    });
+    syncGuests();
+
+    function showDone(name) {
+      form.hidden = true;
+      done.hidden = false;
+      doneTxt.textContent = name
+        ? 'شكراً لكم ' + name + '، تم تسجيل ردكم بنجاح'
+        : 'شكراً لكم، تم تسجيل ردكم بنجاح';
+    }
+
+    /* a returning guest sees their reply, not an empty form */
+    try {
+      var saved = localStorage.getItem(KEY);
+      if (saved) showDone(saved);
+    } catch (e) {}
+
+    again.addEventListener('click', function () {
+      done.hidden = true;
+      form.hidden = false;
+      status.textContent = '';
+      status.className = 'rsvp-status';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var name = document.getElementById('rsvp-name').value.trim();
+      if (name.length < 2) {
+        status.textContent = 'الرجاء كتابة الاسم';
+        status.className = 'rsvp-status err';
+        document.getElementById('rsvp-name').focus();
+        return;
+      }
+
+      var coming = attending() === 'yes';
+      var payload = {
+        name: name,
+        attending: attending(),
+        guests: coming ? parseInt(document.getElementById('rsvp-count').value, 10) || 1 : 0,
+        message: document.getElementById('rsvp-message').value.trim(),
+        invitation: form.getAttribute('data-invitation') || '',
+        page: location.pathname.split('/').pop() || 'index.html'
+      };
+
+      if (!RSVP_ENDPOINT) {
+        console.log('[RSVP] preview only, nothing was sent. payload:', payload);
+        status.textContent = LOCAL
+          ? 'وضع المعاينة: الاستمارة غير مربوطة بعد — راجع RSVP-SETUP.md'
+          : 'تعذّر الإرسال، حاولوا مرة أخرى';
+        status.className = 'rsvp-status err';
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = 'جارٍ الإرسال…';
+      status.textContent = '';
+      status.className = 'rsvp-status';
+
+      /* text/plain keeps this a "simple" request, so the browser skips the
+         preflight that Apps Script does not answer. If the response is still
+         unreadable cross-origin, resend opaquely and trust it. */
+      var opts = {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      };
+
+      function finish() {
+        try { localStorage.setItem(KEY, name); } catch (e) {}
+        showDone(name);
+      }
+
+      function fail() {
+        submit.disabled = false;
+        submit.textContent = 'إرسال الرد';
+        status.textContent = 'تعذّر الإرسال، تأكدوا من الاتصال بالإنترنت وحاولوا مرة أخرى';
+        status.className = 'rsvp-status err';
+      }
+
+      fetch(RSVP_ENDPOINT, opts)
+        .then(function (res) { if (!res.ok) throw new Error(res.status); return res; })
+        .then(finish)
+        .catch(function () {
+          var blind = { method: 'POST', mode: 'no-cors', headers: opts.headers, body: opts.body };
+          fetch(RSVP_ENDPOINT, blind).then(finish).catch(fail);
+        });
+    });
   })();
 </script>
 
