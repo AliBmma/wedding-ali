@@ -480,6 +480,66 @@
     color: var(--ink);
   }
 
+  /* ---------- wishes wall ---------- */
+  .wishes-list {
+    width: min(34rem, 100%);
+    margin: 2.4rem auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .wish {
+    position: relative;
+    margin: 0;
+    padding: 1.5rem 1.6rem 1.2rem;
+    border: 1px solid rgba(185, 133, 74, .32);
+    border-radius: 3px;
+    background: rgba(255, 252, 245, .5);
+    text-align: right;
+  }
+
+  .wish::before {
+    content: '❞';
+    position: absolute;
+    top: .2rem;
+    right: 1.1rem;
+    font-family: 'Amiri', serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: rgba(185, 133, 74, .34);
+  }
+
+  .wish blockquote {
+    margin: 0 2rem 0 0;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+  }
+
+  .wish figcaption {
+    margin-top: .9rem;
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--gold-soft);
+  }
+
+  .wish figcaption::before { content: '— '; }
+
+  .wishes-more {
+    margin-top: 1.6rem;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
   /* ---------- RSVP ---------- */
   .rsvp-panel { padding-bottom: 5rem; }
 
@@ -1495,6 +1555,13 @@
   </div>
 </section>
 
+<section class="panel wishes-panel" id="wishes" hidden>
+  <p class="panel-eyebrow inview">كلماتكم</p>
+  <p class="panel-heading inview">تهانيكم وكلماتكم الطيبة</p>
+  <div class="wishes-list" id="wishes-list"></div>
+  <button class="wishes-more" type="button" id="wishes-more" hidden>عرض المزيد</button>
+</section>
+
 <section class="panel closing-panel" id="closing">
   <div class="flourish inview">
     <svg viewBox="0 0 60 24" width="60" height="24" fill="none" stroke="currentColor" stroke-width="1.2">
@@ -1603,7 +1670,7 @@
      Apps Script web app that appends them to a Google Sheet. Paste the /exec
      URL below - see RSVP-SETUP.md. While it is empty the section stays hidden,
      so guests never meet a form that cannot submit. */
-  var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbysEicpRcAjtw7Mq6B-RrjJ_5rGPpWEsJzVUHEtvtDIs9Gi7Ra4wm8Vego_mxT4y1lm/exec';
+  var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz37v70uFwfoMrvEdRsOA_BEggbkN2F8l9Z-bASuukhgHKk614WJnG3OTe8zvtPYsXr/exec';
 
   (function () {
     var section = document.getElementById('rsvp');
@@ -1726,6 +1793,47 @@
           fetch(RSVP_ENDPOINT, blind).then(finish).catch(fail);
         });
     });
+  })();
+  /* ---------- wishes wall ----------
+     reads back the messages guests left. stays hidden while there are none, and
+     while the deployed script is older than the version with ?action=messages. */
+  (function () {
+    var section = document.getElementById('wishes');
+    if (!section || !RSVP_ENDPOINT) return;
+
+    var list = document.getElementById('wishes-list');
+    var more = document.getElementById('wishes-more');
+    var STEP = 6;
+    var shown = 0;
+    var all = [];
+
+    function render() {
+      all.slice(shown, shown + STEP).forEach(function (m) {
+        var card = document.createElement('figure');
+        card.className = 'wish';
+        var quote = document.createElement('blockquote');
+        quote.textContent = m.message;          /* textContent: a guest cannot inject markup */
+        var who = document.createElement('figcaption');
+        who.textContent = m.name || 'أحد الضيوف';
+        card.appendChild(quote);
+        card.appendChild(who);
+        list.appendChild(card);
+      });
+      shown = Math.min(shown + STEP, all.length);
+      more.hidden = shown >= all.length;
+    }
+
+    more.addEventListener('click', render);
+
+    fetch(RSVP_ENDPOINT + '?action=messages')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (!data || !data.messages || !data.messages.length) return;
+        all = data.messages;
+        render();
+        section.hidden = false;
+      })
+      .catch(function () { /* leave the section hidden rather than show an error */ });
   })();
 </script>
 
