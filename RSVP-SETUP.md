@@ -66,6 +66,27 @@ the invitation, and replies land in the `RSVP` tab of your sheet:
 
 ---
 
+## The admin page (rsvp-admin.html)
+
+`rsvp-admin.html` shows every reply — headline counts, who is coming, how many
+seats in total, and all the messages — in the same cream-and-gold style as the
+invitation. It reads through a second endpoint that is locked with a private key.
+
+1. Invent a key (letters and digits, no spaces) and put it in the `ADMIN_KEY`
+   line near the top of `rsvp-apps-script.gs`
+2. Paste the updated script into the editor and **redeploy a new version**
+   (see the gotcha below)
+3. Open `rsvp-admin.html` and type the key once — it is remembered in that
+   browser afterwards
+
+**The key is never written into any file in this repo.** It lives in your Apps
+Script and in your own browser, so publishing `rsvp-admin.html` to GitHub exposes
+nothing: without the key the page can only show its password prompt. Still, don't
+link to it from the invitation — no reason to advertise it.
+
+The page also gives you a search box, filters (سيحضرون / اعتذروا / مع رسالة), a
+**تحديث** button, and **تصدير CSV** which downloads the whole list for Excel.
+
 ## Gotcha when you edit the script later
 
 Editing the code is **not** enough — the deployed version stays frozen. After any

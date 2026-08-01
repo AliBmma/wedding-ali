@@ -511,22 +511,35 @@
   .music-toggle.muted .icon-off { display: block; }
 
   /* ---------- wishes wall ---------- */
+  /* the wishes panel runs wider than the others to fit a card grid */
+  .wishes-panel { max-width: 58rem; }
+
   .wishes-list {
-    width: min(34rem, 100%);
+    width: 100%;
     margin: 2.4rem auto 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1rem;
+    align-items: start;
   }
 
   .wish {
     position: relative;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 1.5rem 1.6rem 1.2rem;
     border: 1px solid rgba(185, 133, 74, .32);
-    border-radius: 3px;
-    background: rgba(255, 252, 245, .5);
+    border-radius: 6px;
+    background: rgba(255, 252, 245, .55);
+    box-shadow: 0 2px 10px rgba(150, 102, 46, .07);
     text-align: right;
+    transition: box-shadow .3s ease, transform .3s ease;
+  }
+
+  .wish:hover {
+    box-shadow: 0 6px 20px rgba(150, 102, 46, .14);
+    transform: translateY(-2px);
   }
 
   .wish::before {
@@ -550,7 +563,8 @@
   }
 
   .wish figcaption {
-    margin-top: .9rem;
+    margin-top: auto;             /* names line up at the foot of every card */
+    padding-top: .9rem;
     font-family: 'Amiri', serif;
     font-size: 1.1rem;
     color: var(--gold-soft);
@@ -1872,8 +1886,23 @@
 
     more.addEventListener('click', render);
 
-    fetch(RSVP_ENDPOINT + '?action=messages')
-      .then(function (res) { return res.json(); })
+    /* same intermittent 404 as the admin page - retry before staying hidden */
+    function getJson(url, tries) {
+      return fetch(url)
+        .then(function (res) {
+          if (!res.ok) throw new Error('http ' + res.status);
+          return res.json();
+        })
+        .catch(function (err) {
+          if (tries > 1) {
+            return new Promise(function (go) { setTimeout(go, 700); })
+              .then(function () { return getJson(url, tries - 1); });
+          }
+          throw err;
+        });
+    }
+
+    getJson(RSVP_ENDPOINT + '?action=messages', 3)
       .then(function (data) {
         if (!data || !data.messages || !data.messages.length) return;
         all = data.messages;

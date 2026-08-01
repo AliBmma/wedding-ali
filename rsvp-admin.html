@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>ردود الدعوة — علي و دانية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #f3e7d3;            /* page surface, same as the invitation */
+    --card: #fbf5e9;
+    --cream: #4a331e;          /* primary text */
+    --gold: #b9854a;
+    --gold-soft: #96662e;
+    --muted: #a58a68;
+    --line: rgba(185, 133, 74, .3);
+
+    /* validated ordinal pair (monotone L, ΔL .09, light end 2.33:1 on --ink) */
+    --coming: #8a5f26;
+    --apology: #b3946a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background:
+      radial-gradient(120% 60% at 50% -10%, #fdf8ee 0%, rgba(253, 248, 238, 0) 60%),
+      var(--ink);
+    color: var(--cream);
+    font-family: 'Almarai', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 2.5rem 1.2rem 5rem;
+  }
+
+  .wrap { max-width: 60rem; margin: 0 auto; }
+
+  /* ---------- header ---------- */
+  header { text-align: center; margin-bottom: 2.6rem; }
+
+  .eyebrow {
+    font-size: .95rem;
+    letter-spacing: .18em;
+    color: var(--muted);
+    margin-bottom: .7rem;
+  }
+
+  h1 {
+    font-family: 'Amiri', serif;
+    font-weight: 400;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: var(--gold-soft);
+    line-height: 1.4;
+  }
+
+  .rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+    margin: 1rem 0 .4rem;
+    color: var(--gold);
+  }
+
+  .rule::before, .rule::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to var(--dir, right), transparent, var(--gold));
+  }
+  .rule::after { --dir: left; }
+
+  .rule span {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .stamp { font-size: .9rem; color: var(--muted); }
+
+  /* ---------- gate ---------- */
+  .gate {
+    max-width: 24rem;
+    margin: 3rem auto 0;
+    padding: 2rem 1.6rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--card);
+    text-align: center;
+  }
+
+  .gate p { font-size: 1.05rem; color: var(--gold-soft); margin-bottom: 1.2rem; }
+
+  .gate input {
+    width: 100%;
+    padding: .85rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: rgba(255, 252, 245, .7);
+    font-family: inherit;
+    font-size: 1.05rem;
+    color: var(--cream);
+    text-align: center;
+    letter-spacing: .1em;
+  }
+
+  .gate input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(185, 133, 74, .16);
+  }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .7rem 1.6rem;
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: background .3s ease, color .3s ease;
+  }
+
+  .btn:hover { background: var(--gold); color: var(--ink); }
+  .btn.solid { background: var(--gold); color: var(--ink); }
+  .btn.solid:hover { filter: brightness(1.06); }
+  .gate .btn { width: 100%; margin-top: 1rem; }
+
+  /* ---------- stat tiles ---------- */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .tile {
+    padding: 1.4rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--card);
+    text-align: center;
+  }
+
+  .tile .value {
+    display: block;
+    font-family: 'Amiri', serif;
+    font-size: 2.6rem;
+    line-height: 1.1;
+    color: var(--gold-soft);
+  }
+
+  .tile .label {
+    display: block;
+    margin-top: .4rem;
+    font-size: .92rem;
+    color: var(--muted);
+  }
+
+  .tile.lead .value { color: var(--coming); }
+
+  /* ---------- proportion meter ---------- */
+  .meter-card {
+    padding: 1.5rem 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--card);
+    margin-bottom: 1.8rem;
+  }
+
+  .meter-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: .9rem;
+    font-size: .95rem;
+    color: var(--muted);
+  }
+
+  .meter {
+    display: flex;
+    gap: 2px;                 /* surface gap between fills */
+    height: 14px;
+    margin-bottom: .9rem;
+  }
+
+  .meter i {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    transition: width .5s ease;
+  }
+
+  .meter .seg-yes { background: var(--coming); }
+  .meter .seg-no  { background: var(--apology); }
+
+  .meter-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    font-size: .95rem;
+  }
+
+  .meter-legend span { display: inline-flex; align-items: center; gap: .5rem; }
+
+  .swatch {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .swatch.yes { background: var(--coming); }
+  .swatch.no  { background: var(--apology); }
+
+  /* ---------- controls ---------- */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    align-items: center;
+    margin-bottom: 1.4rem;
+  }
+
+  .search {
+    flex: 1 1 12rem;
+    padding: .7rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--card);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--cream);
+  }
+
+  .search:focus { outline: none; border-color: var(--gold); }
+
+  .chip {
+    padding: .6rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    font-family: inherit;
+    font-size: .95rem;
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: background .3s ease, color .3s ease;
+  }
+
+  .chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+  /* ---------- replies, as a card grid ---------- */
+  #list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .reply {
+    display: flex;
+    flex-direction: column;
+    padding: 1.3rem 1.3rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--card);
+    box-shadow: 0 2px 10px rgba(150, 102, 46, .07);
+    transition: box-shadow .3s ease, transform .3s ease;
+  }
+
+  .reply:hover {
+    box-shadow: 0 6px 20px rgba(150, 102, 46, .14);
+    transform: translateY(-2px);
+  }
+
+  .reply-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem .8rem;
+    padding-bottom: .9rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .reply-name {
+    font-family: 'Amiri', serif;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .2rem .7rem;
+    border-radius: 999px;
+    font-size: .85rem;
+    white-space: nowrap;
+    color: #fff;
+  }
+  .status.yes { background: var(--coming); }
+  .status.no  { background: var(--apology); }
+
+  .reply-msg {
+    position: relative;
+    flex: 1;
+    margin: .9rem 0 0;
+    padding-inline-start: 1.4rem;
+    font-size: 1.02rem;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+
+  .reply-msg::before {
+    content: '❞';
+    position: absolute;
+    inset-inline-start: 0;
+    top: -.2rem;
+    font-family: 'Amiri', serif;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: rgba(185, 133, 74, .4);
+  }
+
+  .reply-foot {
+    margin-top: 1rem;
+    font-size: .8rem;
+    color: var(--muted);
+  }
+
+  .empty, .error {
+    padding: 2.5rem 1rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  .error { color: #9c4a3c; }
+
+  [hidden] { display: none !important; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .controls, .gate, .btn { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">علي و دانية</p>
+    <h1>ردود الدعوة</h1>
+    <div class="rule"><span></span></div>
+    <p class="stamp" id="stamp"></p>
+  </header>
+
+  <!-- key gate: the key lives only in this browser, never in the repo -->
+  <form class="gate" id="gate" hidden>
+    <p>أدخل المفتاح الخاص لعرض الردود</p>
+    <input id="key" type="password" autocomplete="current-password" placeholder="المفتاح الخاص" required>
+    <button class="btn solid" type="submit">عرض</button>
+    <p class="error" id="gate-error" hidden style="padding:1rem 0 0"></p>
+  </form>
+
+  <main id="board" hidden>
+    <section class="tiles" aria-label="ملخص الردود">
+      <div class="tile lead"><span class="value" id="t-guests">—</span><span class="label">إجمالي الحضور</span></div>
+      <div class="tile"><span class="value" id="t-yes">—</span><span class="label">ردود بالحضور</span></div>
+      <div class="tile"><span class="value" id="t-no">—</span><span class="label">اعتذارات</span></div>
+      <div class="tile"><span class="value" id="t-total">—</span><span class="label">إجمالي الردود</span></div>
+    </section>
+
+    <section class="meter-card" aria-label="نسبة الحضور">
+      <div class="meter-head">
+        <span>نسبة من أكّدوا الحضور</span>
+        <strong id="m-pct">—</strong>
+      </div>
+      <div class="meter" id="meter" role="img" aria-label="شريط نسبة الحضور">
+        <i class="seg-yes" id="seg-yes" style="width:0"></i>
+        <i class="seg-no" id="seg-no" style="width:0"></i>
+      </div>
+      <div class="meter-legend">
+        <span><i class="swatch yes"></i> سيحضرون <strong id="l-yes">—</strong></span>
+        <span><i class="swatch no"></i> اعتذروا <strong id="l-no">—</strong></span>
+      </div>
+    </section>
+
+    <div class="controls">
+      <input class="search" id="search" type="search" placeholder="ابحث بالاسم أو بالرسالة" aria-label="بحث">
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">الكل</button>
+      <button class="chip" type="button" data-filter="yes" aria-pressed="false">سيحضرون</button>
+      <button class="chip" type="button" data-filter="no" aria-pressed="false">اعتذروا</button>
+      <button class="chip" type="button" data-filter="msg" aria-pressed="false">مع رسالة</button>
+      <button class="btn" type="button" id="refresh">تحديث</button>
+      <button class="btn" type="button" id="csv">تصدير CSV</button>
+    </div>
+
+    <section id="list" aria-live="polite"></section>
+    <p class="empty" id="empty" hidden>لا توجد ردود مطابقة</p>
+  </main>
+
+  <p class="error" id="fatal" hidden></p>
+</div>
+
+<script>
+  /* Same public endpoint the invitation posts to. The guest list itself is
+     protected by the key, which is kept in this browser only - never in a file
+     that goes to GitHub. */
+  var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz37v70uFwfoMrvEdRsOA_BEggbkN2F8l9Z-bASuukhgHKk614WJnG3OTe8zvtPYsXr/exec';
+  var KEY_STORE = 'rsvpAdminKey';
+
+  var gate = document.getElementById('gate');
+  var gateError = document.getElementById('gate-error');
+  var board = document.getElementById('board');
+  var fatal = document.getElementById('fatal');
+  var list = document.getElementById('list');
+  var empty = document.getElementById('empty');
+  var search = document.getElementById('search');
+
+  var replies = [];
+  var filter = 'all';
+
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d)) return '';
+    return d.toLocaleString('ar', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+  }
+
+  /* Apps Script's /exec redirect intermittently 404s (most often right after a
+     deploy), so one failed attempt means nothing - retry before giving up. */
+  function getJson(url, tries) {
+    return fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error('http ' + res.status);
+        return res.json();
+      })
+      .catch(function (err) {
+        if (tries > 1) {
+          return new Promise(function (go) { setTimeout(go, 700); })
+            .then(function () { return getJson(url, tries - 1); });
+        }
+        throw err;
+      });
+  }
+
+  function load(key) {
+    fatal.hidden = true;
+    return getJson(RSVP_ENDPOINT + '?action=all&key=' + encodeURIComponent(key), 4)
+      .then(function (data) {
+        if (!data || !data.ok) throw new Error(data && data.error === 'unauthorized' ? 'unauthorized' : 'failed');
+        /* an older deployment answers the health check instead of the data - say
+           so, rather than rendering a board full of zeros */
+        if (!data.replies) throw new Error('outdated');
+        replies = data.replies;
+        try { localStorage.setItem(KEY_STORE, key); } catch (e) {}
+        gate.hidden = true;
+        board.hidden = false;
+        document.getElementById('stamp').textContent = 'آخر تحديث: ' + fmtDate(new Date().toISOString());
+        summarise();
+        render();
+      });
+  }
+
+  function summarise() {
+    var yes = replies.filter(function (r) { return r.attending; });
+    var no = replies.length - yes.length;
+    var heads = yes.reduce(function (sum, r) { return sum + (r.guests || 0); }, 0);
+
+    document.getElementById('t-guests').textContent = heads;
+    document.getElementById('t-yes').textContent = yes.length;
+    document.getElementById('t-no').textContent = no;
+    document.getElementById('t-total').textContent = replies.length;
+    document.getElementById('l-yes').textContent = yes.length;
+    document.getElementById('l-no').textContent = no;
+
+    var pct = replies.length ? Math.round(yes.length / replies.length * 100) : 0;
+    document.getElementById('m-pct').textContent = pct + '%';
+    document.getElementById('seg-yes').style.width = pct + '%';
+    document.getElementById('seg-no').style.width = (100 - pct) + '%';
+    document.getElementById('meter').setAttribute('aria-label',
+      'سيحضرون ' + yes.length + ' من أصل ' + replies.length + ' ردًا');
+  }
+
+  function visible() {
+    var q = search.value.trim().toLowerCase();
+    return replies.filter(function (r) {
+      if (filter === 'yes' && !r.attending) return false;
+      if (filter === 'no' && r.attending) return false;
+      if (filter === 'msg' && !r.message) return false;
+      if (!q) return true;
+      return (r.name + ' ' + r.message).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  function render() {
+    var rows = visible();
+    list.textContent = '';
+    empty.hidden = rows.length > 0;
+
+    rows.forEach(function (r) {
+      var card = document.createElement('article');
+      card.className = 'reply';
+
+      var top = document.createElement('div');
+      top.className = 'reply-top';
+
+      var name = document.createElement('span');
+      name.className = 'reply-name';
+      name.textContent = r.name || 'بدون اسم';       /* textContent: guest text is never markup */
+
+      var status = document.createElement('span');
+      status.className = 'status ' + (r.attending ? 'yes' : 'no');
+      status.textContent = r.attending ? 'سيحضر · ' + r.guests : 'اعتذر';
+
+      top.appendChild(name);
+      top.appendChild(status);
+      card.appendChild(top);
+
+      if (r.message) {
+        var msg = document.createElement('p');
+        msg.className = 'reply-msg';
+        msg.textContent = r.message;
+        card.appendChild(msg);
+      }
+
+      /* date and which invitation, pinned to the foot of every card */
+      var foot = document.createElement('footer');
+      foot.className = 'reply-foot';
+      foot.textContent = [fmtDate(r.date), r.invitation].filter(Boolean).join(' · ');
+      card.appendChild(foot);
+
+      list.appendChild(card);
+    });
+  }
+
+  /* filters */
+  [].forEach.call(document.querySelectorAll('.chip'), function (chip) {
+    chip.addEventListener('click', function () {
+      filter = chip.getAttribute('data-filter');
+      [].forEach.call(document.querySelectorAll('.chip'), function (c) {
+        c.setAttribute('aria-pressed', String(c === chip));
+      });
+      render();
+    });
+  });
+
+  search.addEventListener('input', render);
+
+  document.getElementById('refresh').addEventListener('click', function () {
+    var key = '';
+    try { key = localStorage.getItem(KEY_STORE) || ''; } catch (e) {}
+    load(key).catch(showError);
+  });
+
+  /* CSV with a BOM so Excel opens the Arabic correctly */
+  document.getElementById('csv').addEventListener('click', function () {
+    var head = ['التاريخ', 'الاسم', 'الحضور', 'عدد الأشخاص', 'الرسالة', 'الدعوة'];
+    var esc = function (v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; };
+    var body = replies.map(function (r) {
+      return [fmtDate(r.date), r.name, r.attending ? 'نعم' : 'لا', r.guests, r.message, r.invitation].map(esc).join(',');
+    });
+    var blob = new Blob(['﻿' + head.map(esc).join(',') + '\n' + body.join('\n')],
+                        { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'rsvp.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  function showError(err) {
+    var reason = String(err && err.message);
+    gate.hidden = false;
+    board.hidden = true;
+    gateError.hidden = false;
+
+    if (reason === 'unauthorized') {
+      gateError.textContent = 'المفتاح غير صحيح، أو لم تضع ADMIN_KEY في السكربت بعد';
+      try { localStorage.removeItem(KEY_STORE); } catch (e) {}
+    } else if (reason === 'outdated') {
+      gateError.textContent = 'السكربت المنشور قديم: انسخ rsvp-apps-script.gs كاملاً ثم '
+                            + 'Deploy ← Manage deployments ← ✏️ ← New version';
+    } else {
+      gateError.textContent = 'تعذّر جلب البيانات — تأكد من الاتصال بالإنترنت';
+    }
+  }
+
+  gate.addEventListener('submit', function (e) {
+    e.preventDefault();
+    gateError.hidden = true;
+    load(document.getElementById('key').value.trim()).catch(showError);
+  });
+
+  /* a key from a previous visit skips the gate */
+  (function () {
+    var saved = '';
+    try { saved = localStorage.getItem(KEY_STORE) || ''; } catch (e) {}
+    if (saved) load(saved).catch(showError);
+    else gate.hidden = false;
+  })();
+</script>
+</body>
+</html>

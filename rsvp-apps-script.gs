@@ -13,6 +13,14 @@ var MAX_MESSAGES = 60;
 /** Put your email between the quotes to get a notification per reply. */
 var NOTIFY_EMAIL = '';
 
+/**
+ * Private key that unlocks rsvp-admin.html. Invent one (letters and digits, no
+ * spaces) and put it between the quotes - it is never stored in the website
+ * files, so nobody can read your guest list without it. While it is empty the
+ * admin page cannot load anything.
+ */
+var ADMIN_KEY = 'ali';
+
 function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);                      // two guests replying at once must not collide
@@ -57,9 +65,41 @@ function doPost(e) {
  * /exec?action=messages feeds the wishes wall on the invitation.
  */
 function doGet(e) {
-  var action = (e && e.parameter && e.parameter.action) || '';
+  var params = (e && e.parameter) || {};
+  var action = params.action || '';
   if (action === 'messages') return json_(messages_());
+  if (action === 'all') {
+    if (!ADMIN_KEY || params.key !== ADMIN_KEY) {
+      return json_({ ok: false, error: 'unauthorized' });
+    }
+    return json_(allReplies_());
+  }
   return json_({ ok: true, service: 'rsvp' });
+}
+
+/** Every reply, newest first - the admin page's data. Never cached. */
+function allReplies_() {
+  var sheet = getSheet_();
+  var last = sheet.getLastRow();
+  var out = [];
+
+  if (last > 1) {
+    var rows = sheet.getRange(2, 1, last - 1, 7).getValues();
+    for (var i = rows.length - 1; i >= 0; i--) {
+      var when = rows[i][0];
+      out.push({
+        date: when ? new Date(when).toISOString() : '',
+        name: String(rows[i][1] || '').trim(),
+        attending: String(rows[i][2] || '').trim() === 'نعم',
+        guests: Number(rows[i][3]) || 0,
+        message: String(rows[i][4] || '').trim(),
+        invitation: String(rows[i][5] || '').trim(),
+        hidden: !!String(rows[i][6] || '').trim()
+      });
+    }
+  }
+
+  return { ok: true, replies: out };
 }
 
 /**
